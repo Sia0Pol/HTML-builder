@@ -22,10 +22,9 @@ async function createTaskElements() {
 
   const stylesElements = await promise.readdir(pathStyles, {recursive: true,   force: true, withFileTypes: true});
 	const template =  await promise.readFile(pathTemplate, {recursive: true, force: true, withFileTypes: true});
+  const htmlComponents =  await promise.readdir(pathComponents, {recursive: true, force: true, withFileTypes: true});
 
   let str = template.toString(); 
-  
-  const htmlComponents =  await promise.readdir(pathComponents, {recursive: true, force: true, withFileTypes: true});
 
   for (let elem of stylesElements) {
 
