@@ -33,28 +33,23 @@ const path = require('path');
 // 	}
 // });
 
+const promise = require('fs/promises');
+const dir1 = path.join(__dirname, 'styles');
+const dir2 = path.join(__dirname, 'project-dist', 'bundle.css');
+const style = fs.createWriteStream(dir2, 'utf-8');
 
-const dir1 = path.join(__dirname + '/styles/');
-const dir2 = path.join(__dirname, 'project-dist');
+(async () => {
 
-fs.writeFile(dir2 + 'bundle.css', '', function (err) {});
+  const fileFiles = await promise.readdir(dir1, {recursive: true,   force: true, withFileTypes: true});
 
-fs.readdir(dir1, function (err, files) {
-	if (err) {
-		return console.log('Unable to scan directory: ' + err);
-	}
-	files.forEach(function (filename) {
-		fs.readFile(dir1 + filename, 'utf-8', function (err, content) {
-			if (err) {
-				console.log(err);
-			} else if (filename.slice(filename.length - 4) == '.css') {
-				fs.appendFile(dir2 + 'bundle.css', content, function (err) {
-					if (err) {
-						console.log(err);
-					}
-				});
-				console.log(filename);
-			}
-		});
-	});
-});
+  for (let elem of fileFiles) {
+    if(elem.isFile() && path.extname(elem.name) === '.css') {
+      const pathFile = path.join(dir1, elem.name);
+      const readFile = await promise.readFile(pathFile, {recursive: true,   force: true});
+      style.write(`${readFile}\n\n`);
+    } 
+  }
+
+})();
+
+
