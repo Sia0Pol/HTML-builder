@@ -34,8 +34,8 @@ const path = require('path');
 // });
 
 
-const dir1 = path.join(__dirname, 'styles');
-const dir2 = path.join(__dirname, 'project-dist', 'bundle.css');
+const dir1 = path.join(__dirname, '/styles/');
+const dir2 = path.join(__dirname, '/project-dist/');
 
 fs.writeFile(dir2, 'bundle.css', function (err) {
 });
