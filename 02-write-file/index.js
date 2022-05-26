@@ -1,9 +1,15 @@
 const fs = require('fs');
 const { stdin, stdout } = process;
+const path = require('path');
 
-let createTxtFile = fs.createWriteStream('text.txt');
+const pathTXT = path.join(__dirname, 'text.txt');
+
+
+
+const createTxtFile = fs.createWriteStream(pathTXT);
 
 stdout.write('Введите сообщение:');
+
 stdin.on('data', function(data){
 	if (data.toString().trim() == 'exit'){
 		stdout.write('Bye!');
